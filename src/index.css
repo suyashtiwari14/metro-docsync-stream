@@ -2,14 +2,31 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+/* KMRL Metro-Themed Design System */
 
 @layer base {
   :root {
     --background: 220 30% 97%;
     --foreground: 220 15% 15%;
+
+    /* KMRL Brand Colors */
+    --kmrl-orange: 18 100% 59%;     /* #FF6B35 */
+    --kmrl-orange-light: 18 100% 69%;
+    --kmrl-orange-dark: 18 100% 49%;
+    
+    --kmrl-blue: 214 89% 60%;       /* #1E88E5 */
+    --kmrl-blue-light: 214 89% 70%;
+    --kmrl-blue-dark: 214 89% 50%;
+    
+    --kmrl-green: 122 39% 49%;      /* #4CAF50 */
+    --kmrl-green-light: 122 39% 59%;
+    
+    /* Glass morphism colors */
+    --glass-white: 0 0% 100%;
+    --glass-border: 0 0% 100%;
+    --glass-shadow: 220 20% 60%;
 
     --card: 0 0% 100%;
     --card-foreground: 220 15% 15%;
@@ -17,23 +34,23 @@ All colors MUST be HSL.
     --popover: 0 0% 100%;
     --popover-foreground: 220 15% 15%;
 
-    --primary: 217 84% 53%;
+    --primary: 18 100% 59%;
     --primary-foreground: 0 0% 100%;
-    --primary-glow: 217 84% 63%;
+    --primary-glow: 18 100% 69%;
 
-    --secondary: 220 30% 94%;
-    --secondary-foreground: 220 15% 25%;
+    --secondary: 214 89% 60%;
+    --secondary-foreground: 0 0% 100%;
 
     --muted: 220 20% 96%;
     --muted-foreground: 220 10% 55%;
 
-    --accent: 220 30% 94%;
-    --accent-foreground: 220 15% 25%;
+    --accent: 122 39% 49%;
+    --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
 
-    --success: 142 71% 45%;
+    --success: 122 39% 49%;
     --success-foreground: 0 0% 100%;
     
     --warning: 38 92% 50%;
@@ -41,23 +58,31 @@ All colors MUST be HSL.
 
     --border: 220 20% 88%;
     --input: 220 20% 88%;
-    --ring: 217 84% 53%;
+    --ring: 18 100% 59%;
 
-    /* Enterprise gradients */
-    --gradient-primary: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--primary-glow)));
-    --gradient-card: linear-gradient(145deg, hsl(var(--card)), hsl(220 30% 98%));
-    --gradient-hero: linear-gradient(135deg, hsl(217 84% 53%), hsl(230 100% 65%));
+    /* Metro-inspired gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(var(--kmrl-orange)), hsl(var(--kmrl-orange-light)));
+    --gradient-secondary: linear-gradient(135deg, hsl(var(--kmrl-blue)), hsl(var(--kmrl-blue-light)));
+    --gradient-success: linear-gradient(135deg, hsl(var(--kmrl-green)), hsl(var(--kmrl-green-light)));
+    --gradient-hero: linear-gradient(135deg, hsl(var(--kmrl-orange)), hsl(var(--kmrl-blue)));
+    --gradient-glass: linear-gradient(145deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05));
+    --gradient-background: linear-gradient(135deg, hsl(220 30% 97%), hsl(214 30% 95%));
+    --gradient-metro-lines: linear-gradient(90deg, hsl(var(--kmrl-orange)), hsl(var(--kmrl-blue)), hsl(var(--kmrl-green)));
     
-    /* Professional shadows */
+    /* Advanced glassmorphism shadows */
+    --shadow-glass: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+    --shadow-glass-inset: inset 0 1px 0 0 rgba(255, 255, 255, 0.1);
+    --shadow-floating: 0 20px 40px -12px rgba(0, 0, 0, 0.25);
+    --shadow-metro: 0 4px 20px -2px hsl(var(--kmrl-orange) / 0.3);
     --shadow-elegant: 0 4px 20px -2px hsl(var(--primary) / 0.1);
     --shadow-card: 0 2px 10px -1px hsl(220 20% 60% / 0.1);
-    --shadow-floating: 0 8px 30px -4px hsl(var(--primary) / 0.15);
 
-    /* Status colors */
-    --status-online: 142 71% 45%;
-    --status-warning: 38 92% 50%;
-    --status-offline: 0 84% 60%;
-    --status-processing: 217 84% 53%;
+    /* Status colors with metro line theming */
+    --status-online: 122 39% 49%;      /* Green Line */
+    --status-warning: 38 92% 50%;      /* Yellow Line */
+    --status-offline: 0 84% 60%;       /* Red Line */
+    --status-processing: 18 100% 59%;  /* Orange Line */
+    --status-blue-line: 214 89% 60%;   /* Blue Line */
 
     --radius: 0.5rem;
 
@@ -123,6 +148,125 @@ All colors MUST be HSL.
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-gradient-background text-foreground font-poppins;
   }
+}
+
+/* Metro-themed glass morphism utilities */
+@layer components {
+  .glass-card {
+    @apply backdrop-blur-xl bg-white/10 border border-white/20 shadow-glass;
+  }
+  
+  .glass-panel {
+    @apply backdrop-blur-lg bg-white/5 border border-white/10;
+  }
+  
+  .metro-station-card {
+    @apply bg-gradient-glass backdrop-blur-xl border border-white/20 rounded-2xl shadow-glass relative overflow-hidden;
+  }
+  
+  .metro-line-orange {
+    @apply bg-gradient-primary text-white;
+  }
+  
+  .metro-line-blue {
+    @apply bg-gradient-secondary text-white;
+  }
+  
+  .metro-line-green {
+    @apply bg-gradient-success text-white;
+  }
+  
+  .status-indicator {
+    @apply w-3 h-3 rounded-full relative;
+  }
+  
+  .status-indicator::after {
+    @apply content-[''] absolute top-0 left-0 w-full h-full rounded-full animate-ping;
+  }
+  
+  .train-track::before {
+    @apply content-[''] absolute top-1/2 left-0 w-full h-0.5 bg-gradient-metro-lines;
+  }
+  
+  .railway-separator {
+    @apply relative flex items-center justify-center py-8;
+  }
+  
+  .railway-separator::before {
+    @apply content-[''] absolute top-1/2 left-0 w-full h-1 bg-gradient-to-r from-transparent via-border to-transparent;
+  }
+  
+  .led-display {
+    @apply font-mono bg-black text-green-400 px-4 py-2 rounded border-2 border-green-400/50 shadow-inner;
+  }
+  
+  .metro-platform-number {
+    @apply bg-primary text-primary-foreground font-bold text-lg px-4 py-2 rounded-lg inline-flex items-center justify-center min-w-[3rem];
+  }
+}
+
+/* Advanced animations for metro theme */
+@layer utilities {
+  .animate-train-move {
+    animation: trainMove 20s linear infinite;
+  }
+  
+  .animate-document-flow {
+    animation: documentFlow 3s ease-in-out infinite;
+  }
+  
+  .animate-glow {
+    animation: glow 2s ease-in-out infinite alternate;
+  }
+  
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+  
+  .hover-lift {
+    @apply transition-all duration-300 hover:translate-y-[-4px] hover:shadow-floating;
+  }
+  
+  .glass-hover {
+    @apply transition-all duration-300 hover:bg-white/15 hover:border-white/30;
+  }
+}
+
+@keyframes trainMove {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100vw); }
+}
+
+@keyframes documentFlow {
+  0%, 100% { 
+    transform: translateX(0) scale(1);
+    opacity: 1;
+  }
+  50% { 
+    transform: translateX(20px) scale(1.05);
+    opacity: 0.8;
+  }
+}
+
+@keyframes glow {
+  0% { box-shadow: 0 0 20px hsl(var(--primary) / 0.3); }
+  100% { box-shadow: 0 0 30px hsl(var(--primary) / 0.6), 0 0 40px hsl(var(--primary) / 0.3); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+/* Responsive typography */
+@layer base {
+  .font-poppins { font-family: 'Poppins', sans-serif; }
+  .font-mono { font-family: 'JetBrains Mono', monospace; }
+  
+  .text-display { @apply text-4xl font-bold tracking-tight; }
+  .text-metro-heading { @apply text-2xl font-semibold text-foreground; }
+  .text-station-sign { @apply text-lg font-medium uppercase tracking-wide; }
+  .text-led { @apply font-mono text-sm font-medium; }
 }
